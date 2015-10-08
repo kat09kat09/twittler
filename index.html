@@ -18,18 +18,57 @@
        
           while(index >= 0){
             var tweet = streams.home[index];
+         
             var $tweet = $('<div></div>');
-            $tweet.text('@' + tweet.user + ': ' + tweet.message + ' ' + tweet.created_at);
+            var $user = $('<button></button>').addClass("user"); 
+            $user.text('@' + tweet.user); 
+            $tweet.text(': ' + tweet.message + ' ' + tweet.created_at);
+            
+            $tweet.prepend($user)
             $tweet.appendTo($body);
+
             index -= 1;
           }
-    
           var $getMore = $('<button id="getTweets">Get Tweets</button>');
           $getMore.appendTo($body); 
           $("#getTweets").click(displayTweets); 
-        }
+          $(".user").click(getUserTweets); 
+          
 
+        }
+       
+        
+        function getUserTweets() {
+   
+            var $body = $('body');
+            $body.html('');
+
+            user= $(this).text().substr(1); 
+
+            var index = streams.users[user].length - 1;
+       
+            while(index >= 0){
+              //tweet object
+              var tweet = streams.users[user][index];
+           
+              var $tweet = $('<div></div>');
+              var $user = $('<button></button>').addClass("user"); 
+              $user.text('@' + tweet.user); 
+              $tweet.text(': ' + tweet.message + ' ' + tweet.created_at);
+              
+              $tweet.prepend($user)
+              $tweet.appendTo($body);
+
+              index -= 1;
+            }
+            var $allTweets = $('<button id="back">Back</button>');
+            $allTweets.appendTo($body); 
+            $("#back").click(displayTweets); 
+          }
+      
         displayTweets(); 
+
+        
    
       });
 
