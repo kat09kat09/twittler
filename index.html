@@ -12,14 +12,15 @@
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <script src="index.css"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js"></script>
 
   </head>
-  <body>
-    <div class="container">
-      <div class="header clearfix">
-        <h3 class="text-muted">Twittler</h3>
+  <body style="background-color:#D3D3D3">
+    <div style="background-color:#D3D3D3"  class="container-fluid">
+      <div style="background-color:#008080" class="navbar navbar-fixed-top navbar-inverse">
+        <h3 style="color:white" >Twittler</h3>
       </div>
-      <div class="jumbotron">
+      <div style="background-color: transparent !important" class="jumbotron">
         <script>
 
           $(document).ready(function(){
@@ -29,7 +30,7 @@
               $body.html('');
 
               //Button to click when you want to get more tweets
-              var $getMore = $('<button id="getTweets">More Tweets ...</button>');
+              var $getMore = $('<div style="padding:1em"><button id="getTweets" type="button" class="btn btn-default">More Tweets ...</button></div>');
               $getMore.appendTo($body); 
               $("#getTweets").click(displayTweets); 
         
@@ -39,13 +40,11 @@
               while(index >= 0){
                 var tweet = streams.home[index];
               
-              
-                var $tweet = $('<div></div>');
-                var $user = $('<button></button>').addClass("user"); 
+                var $tweet = $('<div style="background-color: white; padding:1em"></div>');
+                var $user = $('<button style="color:#008080"  type="button" class="btn btn-default"></button>').addClass("user"); 
                 $user.text('@' + tweet.user); 
                 $tweet.text(' ' + tweet.message + ' ' + tweet.created_at);
       
-
                 $tweet.prepend($user); 
                 $tweet.appendTo($body);
               
@@ -76,12 +75,12 @@
               $body.html('');
 
               //you can click the "More Tweets..." button to get more tweets by that user
-              var $getMore = $('<button id="getTweets">More Tweets ...</button>');
+              var $getMore = $('<div style="padding:1em"><button id="getTweets" type="button" class="btn btn-default">More Tweets ...</button></div>');
               $getMore.appendTo($body); 
               $("#getTweets").click({username: user}, getUserTweets); 
 
               //you can click the "Back" button to get all the tweets from users you're following
-              var $allTweets = $('<button id="back">Back</button>');
+              var $allTweets = $('<div style="padding:1em"><button id="back" type="button" class="btn btn-default">Back</button></div>');
               $allTweets.appendTo($body); 
               $("#back").click(displayTweets); 
               
@@ -92,8 +91,8 @@
                 //tweet object
                 var tweet = streams.users[user][index];
                
-                var $tweet = $('<div></div>');
-                var $user = $('<button></button>').addClass("user"); 
+                var $tweet = $('<div style="background-color: white; padding:1em"></div>');
+                var $user = $('<button style="color:#008080"   type="button" class="btn btn-default"></button>').addClass("user"); 
                 $user.text('@' + tweet.user); 
                 $tweet.text(' ' + tweet.message + ' ' + tweet.created_at);
                   
