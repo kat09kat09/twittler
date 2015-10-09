@@ -39,11 +39,12 @@
            
               while(index >= 0){
                 var tweet = streams.home[index];
+                var tweetDateWrapper= moment(tweet.created_at).fromNow(); 
               
                 var $tweet = $('<div style="background-color: white; padding:1em"></div>');
                 var $user = $('<button style="color:#008080"  type="button" class="btn btn-default"></button>').addClass("user"); 
                 $user.text('@' + tweet.user); 
-                $tweet.text(' ' + tweet.message + ' ' + tweet.created_at);
+                $tweet.text(' ' + tweet.message + ' ' + tweetDateWrapper);
       
                 $tweet.prepend($user); 
                 $tweet.appendTo($body);
@@ -90,11 +91,12 @@
               while(index >= 0){
                 //tweet object
                 var tweet = streams.users[user][index];
+                var tweetDateWrapper= moment(tweet.created_at).fromNow(); 
                
                 var $tweet = $('<div style="background-color: white; padding:1em"></div>');
                 var $user = $('<button style="color:#008080"   type="button" class="btn btn-default"></button>').addClass("user"); 
                 $user.text('@' + tweet.user); 
-                $tweet.text(' ' + tweet.message + ' ' + tweet.created_at);
+                $tweet.text(' ' + tweet.message + ' ' + tweetDateWrapper);
                   
                 $tweet.prepend($user);
                 $tweet.appendTo($body);
