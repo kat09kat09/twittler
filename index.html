@@ -3,76 +3,114 @@
   <head>
     <script src="jquery.js"></script>
     <script src="data_generator.js"></script>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="index.css"></script>
+
   </head>
   <body>
-       
-    <script>
+    <div class="container">
+      <div class="header clearfix">
+        <h3 class="text-muted">Twittler</h3>
+      </div>
+      <div class="jumbotron">
+        <script>
 
-      $(document).ready(function(){
-        
-        function displayTweets() {
-          var $body = $('body');
-          $body.html('');
-
-          var index = streams.home.length - 1;
-       
-          while(index >= 0){
-            var tweet = streams.home[index];
-         
-            var $tweet = $('<div></div>');
-            var $user = $('<button></button>').addClass("user"); 
-            $user.text('@' + tweet.user); 
-            $tweet.text(': ' + tweet.message + ' ' + tweet.created_at);
+          $(document).ready(function(){
             
-            $tweet.prepend($user)
-            $tweet.appendTo($body);
+            function displayTweets() {
+              var $body = $(".jumbotron");
+              $body.html('');
 
-            index -= 1;
-          }
-          var $getMore = $('<button id="getTweets">Get Tweets</button>');
-          $getMore.appendTo($body); 
-          $("#getTweets").click(displayTweets); 
-          $(".user").click(getUserTweets); 
-          
-
-        }
-       
+              //Button to click when you want to get more tweets
+              var $getMore = $('<button id="getTweets">More Tweets ...</button>');
+              $getMore.appendTo($body); 
+              $("#getTweets").click(displayTweets); 
         
-        function getUserTweets() {
-   
-            var $body = $('body');
-            $body.html('');
-
-            user= $(this).text().substr(1); 
-
-            var index = streams.users[user].length - 1;
-       
-            while(index >= 0){
-              //tweet object
-              var tweet = streams.users[user][index];
+              //Iterate through tweets & display
+              var index = streams.home.length - 1;
            
-              var $tweet = $('<div></div>');
-              var $user = $('<button></button>').addClass("user"); 
-              $user.text('@' + tweet.user); 
-              $tweet.text(': ' + tweet.message + ' ' + tweet.created_at);
+              while(index >= 0){
+                var tweet = streams.home[index];
               
-              $tweet.prepend($user)
-              $tweet.appendTo($body);
-
-              index -= 1;
-            }
-            var $allTweets = $('<button id="back">Back</button>');
-            $allTweets.appendTo($body); 
-            $("#back").click(displayTweets); 
-          }
+              
+                var $tweet = $('<div></div>');
+                var $user = $('<button></button>').addClass("user"); 
+                $user.text('@' + tweet.user); 
+                $tweet.text(' ' + tweet.message + ' ' + tweet.created_at);
       
-        displayTweets(); 
 
-        
-   
-      });
+                $tweet.prepend($user); 
+                $tweet.appendTo($body);
+              
 
-    </script>
+                index -= 1;
+              }
+              
+              //Get specific user's tweets when you click on a username
+              $(".user").click(getUserTweets); 
 
+            }
+           
+            //Gets tweets from a specific user 
+            function getUserTweets(event) {
+              var user;
+              
+              //if username is supplied via the button text, use it
+              //otherwise the username was passed in as part of the event data
+              var $buttonText= $(this).text(); 
+              if($buttonText.substr(0,1)==='@') {
+                user= $buttonText.substr(1); 
+              } else {
+                user= event.data.username; 
+              }
+              
+              //Display tweets in a jumbotron
+              var $body = $('.jumbotron');
+              $body.html('');
+
+              //you can click the "More Tweets..." button to get more tweets by that user
+              var $getMore = $('<button id="getTweets">More Tweets ...</button>');
+              $getMore.appendTo($body); 
+              $("#getTweets").click({username: user}, getUserTweets); 
+
+              //you can click the "Back" button to get all the tweets from users you're following
+              var $allTweets = $('<button id="back">Back</button>');
+              $allTweets.appendTo($body); 
+              $("#back").click(displayTweets); 
+              
+              //get the specific user's tweets & display
+              var index = streams.users[user].length - 1;
+       
+              while(index >= 0){
+                //tweet object
+                var tweet = streams.users[user][index];
+               
+                var $tweet = $('<div></div>');
+                var $user = $('<button></button>').addClass("user"); 
+                $user.text('@' + tweet.user); 
+                $tweet.text(' ' + tweet.message + ' ' + tweet.created_at);
+                  
+                $tweet.prepend($user);
+                $tweet.appendTo($body);
+         
+                index -= 1;
+              }
+              
+            }
+          
+            displayTweets(); 
+
+          });
+
+        </script>
+      </div?
+    </div>
   </body>
 </html>
