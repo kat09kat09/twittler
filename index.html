@@ -18,11 +18,33 @@
   <body style="background-color:#D3D3D3">
     <div style="background-color:#D3D3D3"  class="container-fluid">
       <div style="background-color:#008080" class="navbar navbar-fixed-top navbar-inverse">
-        <h3 style="color:white" >Twittler</h3>
-      </div>
-      <div style="background-color: transparent !important" class="jumbotron">
-        <script>
+        <h3 style="color:white">Twittler</h3>
+        <div id="makeTweet">
+          <script>
+            $(document).ready(function(){
+              var $nav=$("#makeTweet"); 
+              $nav.html(''); 
 
+              //Form & button to make a tweet
+              var $writeTweet= $('<span><input id="tweetContent" type="text" class="form-control" placeholder="Type your tweet here!" aria-describedby="basic-addon1"><button class="btn btn-default" id="writeTweet" >Tweet!</button></span>');
+              $writeTweet.appendTo($nav); 
+              $("#writeTweet").click(makeTweet); 
+
+               //Wrapper for the the tweeting button. Calls "writeTweet" with the message content. Does nothing if the tweet message is empty.
+              function makeTweet(){
+                var tweetContent= $('#tweetContent').val();
+                if(tweetContent=== '') { return }
+                console.log('tweetContent', tweetContent); 
+                writeTweet(tweetContent); 
+                $('#tweetContent').val('')
+              }
+
+            }); 
+          </script>
+        </div>
+      </div>
+      <div style="background-color: transparent !important; padding-top: 10em" class="jumbotron">
+        <script>
           $(document).ready(function(){
             
             function displayTweets() {
@@ -30,9 +52,10 @@
               $body.html('');
 
               //Button to click when you want to get more tweets
-              var $getMore = $('<div style="padding:1em"><button id="getTweets" type="button" class="btn btn-default">More Tweets ...</button></div>');
+              var $getMore = $('<span style="padding:1em"><button id="getTweets" type="button" class="btn btn-default">More Tweets ...</button></span>');
               $getMore.appendTo($body); 
-              $("#getTweets").click(displayTweets); 
+          
+              $("#getTweets").click(displayTweets);  
         
               //Iterate through tweets & display
               var index = streams.home.length - 1;
@@ -58,7 +81,7 @@
 
             }
            
-            //Gets tweets from a specific user 
+            //Gets tweets for a specific user 
             function getUserTweets(event) {
               var user;
               
@@ -103,13 +126,9 @@
          
                 index -= 1;
               }
-              
-            }
-          
+            }     
             displayTweets(); 
-
           });
-
         </script>
       </div?
     </div>
