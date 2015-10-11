@@ -11,7 +11,12 @@ streams.users.shawndrost = [];
 streams.users.sharksforcheap = [];
 streams.users.mracus = [];
 streams.users.douglascalhoun = [];
+streams.users.visitor = []; 
 window.users = Object.keys(streams.users);
+//remove "visitor" from the random tweet generator
+var visitorIdx= window.users.indexOf('visitor');
+window.users.splice(visitorIdx, 1); 
+window.visitor= "visitor"; 
 
 // utility function for adding tweets to our data structures
 var addTweet = function(newTweet){
@@ -44,6 +49,7 @@ var generateRandomTweet = function(){
   tweet.message = randomMessage();
   tweet.created_at = new Date();
   addTweet(tweet);
+  // console.log(tweet); 
 };
 
 for(var i = 0; i < 10; i++){
@@ -54,7 +60,8 @@ var scheduleNextTweet = function(){
   generateRandomTweet();
   setTimeout(scheduleNextTweet, Math.random() * 1500);
 };
-scheduleNextTweet();
+
+scheduleNextTweet(); 
 
 // utility function for letting students add "write a tweet" functionality
 // (note: not used by the rest of this file.)
